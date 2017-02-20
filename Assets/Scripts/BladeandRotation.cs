@@ -46,7 +46,7 @@ public class BladeandRotation : MonoBehaviour {
                 //move the blade to the characters position, then start to rotate it each frame
                 transform.position = parent.position;
                 transform.rotation = Quaternion.Euler(0, 0, (parent.mouseAngle - 90 + rotationoffset));
-                rotationoffset += (Time.deltaTime * 180);
+                rotationoffset += (Time.deltaTime * 270);
             }
             else
             {//otherwise Reset the rotation amount and turn off swing.
