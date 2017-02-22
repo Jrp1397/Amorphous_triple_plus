@@ -1,21 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SeekingChild : EnemyParent {
-    public Character mainCharacter;
+public class SeekingChild : EnemyParent { 
 
    
 
     // Use this for initialization
     public override void Start () {
-        DamageType = 1;
+        DamageType = 2;
+        scoreToSpawn = 5;
 	}
 
-	override public void Setup(Character MC)
-    {
-        mainCharacter = MC;
-        Debug.Log("Inheritance worked properly.");
-    }
+
 	// Update is called once per frame
 	public override void Update () {
         DisableBoundry();

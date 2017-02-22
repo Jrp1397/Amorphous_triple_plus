@@ -28,11 +28,14 @@ public class Manager : MonoBehaviour {
 	void Start () {
 	for(int i=0;  i<(maxDrones + maxSeekers); i++)
         {
-            holding = Instantiate(dronePrefab);
-            droneList.Add(holding.GetComponent<EnemyParent>());
-            droneList[i].Disable();
-            droneList[i].Setup(mainCharacter);
-            if (i > maxDrones)
+            if (i <= maxDrones)
+            {
+                holding = Instantiate(dronePrefab);
+                droneList.Add(holding.GetComponent<EnemyParent>());
+                droneList[i].Disable();
+                droneList[i].Setup(mainCharacter);
+            }
+            else if (i > maxDrones)
             {
                 holding = Instantiate(seekerPrefab);
                 droneList.Add(holding.GetComponent<SeekingChild>());
@@ -52,9 +55,10 @@ public class Manager : MonoBehaviour {
 
     public void DroneUpdate()
     {// for each type of enemy, go through all of em, and turn on some of them if they are off.
+
         foreach (EnemyParent drone in droneList)
-        {
-            if (!drone.isActive)
+        {            
+            if (!drone.isActive && (score >= drone.scoreToSpawn))
             {
                 if (Random.Range(0, DroneSpawnChance) < 5)
                 {
@@ -75,7 +79,7 @@ public class Manager : MonoBehaviour {
                 if ((((mainCharacter.position.x - drone.position.x)* (mainCharacter.position.x - drone.position.x)) + ((mainCharacter.position.y - drone.position.y) * (mainCharacter.position.y - drone.position.y)))<(drone.radius*drone.radius))
                 {
                     Debug.Log("player hit");
-                    if (drone.DamageType == 1)
+                    if (drone.DamageType > 1)
                     {
                         score = 0;
                         Debug.Log("You died");

@@ -3,20 +3,24 @@ using System.Collections;
 
 public class EnemyParent : MonoBehaviour {
 
+    public Character mainCharacter;
     public GameObject bumper;
-    public int DamageType;
-    public int determinator;
-    public float radius;
-    public Vector3 worldSize;
-    public float rotAngle;
     public Quaternion rotation;
+    public Vector3 worldSize;
     public Vector3 velocity;
     public Vector3 position;
+    public float radius;
+    public float rotAngle;
+    public int DamageType;
+    public int determinator;//for debugging
+    public int scoreToSpawn;
     public bool isActive;
+
 
     // Use this for initialization
      public virtual void Start () {
         DamageType = 0;
+        scoreToSpawn = -1;
 	}
 	
 	// Update is called once per frame
@@ -30,8 +34,8 @@ public class EnemyParent : MonoBehaviour {
     }
 
     public virtual void Generate() {
-        determinator = Random.Range(0, 4);//put the object on a wall, and give it a forward facing direction
-        if (determinator == 0)
+        determinator = Random.Range(0, 5);//put the object on a wall, and give it a forward facing direction
+        if (determinator == 4)
         {
             position.x = -(worldSize.x);
             position.y = (Random.Range(-worldSize.y, worldSize.y));
@@ -47,7 +51,7 @@ public class EnemyParent : MonoBehaviour {
         {
             position.x = worldSize.x;
             position.y = (Random.Range(-worldSize.y, worldSize.y));
-            rotAngle = (Random.Range(90, 270));
+            rotAngle = (Random.Range(90,270));
         }
         if (determinator == 3)
         {
@@ -66,7 +70,7 @@ public class EnemyParent : MonoBehaviour {
     
     public virtual void DisableBoundry()
     {
-        if (position.x > worldSize.x || position.x < -worldSize.x || position.y > worldSize.y || position.y < -worldSize.y)
+        if (position.x > worldSize.x+.5 || position.x < -worldSize.x-.5 || position.y > worldSize.y+.5 || position.y < -worldSize.y-.5)
         {
             position.x = 20;
             isActive = false;
@@ -80,6 +84,6 @@ public class EnemyParent : MonoBehaviour {
     }
     public virtual void Setup(Character MC)
     {
-        Debug.Log("i'm a placeholder");
+        mainCharacter = MC;
     }
 }
